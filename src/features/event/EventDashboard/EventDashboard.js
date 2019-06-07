@@ -58,13 +58,27 @@ const eventsFromDashboard = [
  class EventDashboard extends Component {
      state =  {
          events: eventsFromDashboard,
-         isOpen: false
+         isOpen: false,
+         selectedEvent: null
      }
 
-     handleIsOpenToggle = () => {
-        this.setState((prevState) => ({
-            isOpen: !prevState.isOpen
-        }));
+    //  handleIsOpenToggle = () => {
+    //     this.setState((prevState) => ({
+    //         isOpen: !prevState.isOpen
+    //     }));
+    //  }
+     
+    handleCreateFormOpen = () => {
+        this.setState({
+            isOpen: true,
+            selectedEvent: null
+        })
+    }
+
+    handleCreateFormCancel = () => {
+        this.setState({
+            isOpen: false,
+        });
      }
 
      handleCreateEvent = newEvent => {
@@ -76,16 +90,28 @@ const eventsFromDashboard = [
         }));
      }
 
+     handleSelectEvent = (selectEvent) => {
+         this.setState({
+             selectedEvent: selectEvent,
+             isOpen: true
+         });
+     }
+
      render() {
-         const { events, isOpen } = this.state;
+         const { events, isOpen, selectedEvent } = this.state;
          return (
              <Grid>
                  <Grid.Column width={10}>
-                    <EventList events={events}/>
+                    <EventList events={events} selectEvent={this.handleSelectEvent}/>
                  </Grid.Column>
                  <Grid.Column width={6}>
-                     <Button positive content="CreateEvent" onClick={this.handleIsOpenToggle}/>
-                     { isOpen && <EventForm createEvent={this.handleCreateEvent} cancelFormOpen={this.handleIsOpenToggle} /> }
+                     <Button positive content="CreateEvent" onClick={this.handleCreateFormOpen}/>
+                     { isOpen && (
+                        <EventForm 
+                            createEvent={this.handleCreateEvent} 
+                            cancelFormOpen={this.handleCreateFormCancel} 
+                            selectEvent={selectedEvent}/> 
+                     )}
                  </Grid.Column>
              </Grid>
          )
