@@ -8,6 +8,7 @@ import PeopleDashboard from '../../features/user/PeopleDashboard/PeopleDashboard
 import SettingsDashoboard from '../../features/user/Settings/SettingsDashboard';
 import { Container } from 'semantic-ui-react';
 import { Route } from 'react-router-dom';
+import TestComponent from '../../features/testarea/TestComponent';
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
               <Route path="/profile/:id" component={PeopleDashboard}/>          
               <Route path="/settings" component={SettingsDashoboard}/>          
               <Route path="/createEvent" component={EventForm}/>          
+              <Route path="/test" component={TestComponent}/>          
             </Container>
           </Fragment>
         )}/>

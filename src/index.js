@@ -4,11 +4,21 @@ import './index.css';
 import App from './app/layout/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-
+import { Provider } from 'react-redux';
+import { configureStore } from './app/store/configureStore';
+// Redux store
+const store = configureStore();
 // prevent page refresh flickering 
 const rootEl = document.getElementById('root');
 let render = () => {
-    ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, rootEl);
+    ReactDOM.render(
+        <Provider store={store}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Provider>, 
+        rootEl
+    );
 }
 // webpack api
 if(module.hot) {
