@@ -115,6 +115,7 @@ const eventsFromDashboard = [
 
      render() {
          const { events, isOpen, selectedEvent } = this.state;
+        //  instead componentWillReceiveProps (deprecated) we will use key in the eventform
          return (
              <Grid>
                  <Grid.Column width={10}>

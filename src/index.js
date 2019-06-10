@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/layout/App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from 'react-router-dom';
 
 // prevent page refresh flickering 
 const rootEl = document.getElementById('root');
 let render = () => {
-    ReactDOM.render(<App />, rootEl);
+    ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, rootEl);
 }
 // webpack api
 if(module.hot) {
