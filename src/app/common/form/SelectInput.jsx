@@ -1,9 +1,8 @@
 import React from 'react'
-import { Form, Label, Select } from 'semantic-ui-react';
+import {Form, Label, Select} from 'semantic-ui-react'
 
-const SelectInput = ({input, type, placeholder, multiple, options, meta:{touched, error}}) => {
+const SelectInput = ({input, type, placeholder, multiple, options, meta: {touched, error}}) => {
     return (
-        // Select needs a vale and own onchange
         <Form.Field error={touched && !!error}>
             <Select
                 value={input.value || null}
@@ -12,9 +11,9 @@ const SelectInput = ({input, type, placeholder, multiple, options, meta:{touched
                 options={options}
                 multiple={multiple}
             />
-            {touched && error && <Label basic color='red'>{error}</Label>}
+            {touched && error &&<Label basic color='red'>{error}</Label>}
         </Form.Field>
-    );
+    )
 }
 
-export default SelectInput;
+export default SelectInput
