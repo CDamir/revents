@@ -182,6 +182,8 @@ export const cancelGoingToEvent = event => async (
   const firebase = getFirebase();
   const user = firebase.auth().currentUser;
   try {
+    // use firestore.FieldValue.delete() because of the redux-firestore bug in 0.8 version and not in 0.3.2
+    // it recent version from 0.3.2 it deletes the values but not update the reducer => probably will be solved in 1.X
     await firestore.update(`events/${event.id}`, {
       [`attendees.${user.uid}`]: firestore.FieldValue.delete()
     });

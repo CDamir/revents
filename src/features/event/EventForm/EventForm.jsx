@@ -72,10 +72,9 @@ class EventForm extends Component {
     cityLatLng: {},
     venueLatLng: {}
   };
-
+  // firestore connect will this automatically
   async componentDidMount() {
     const { firestore, match } = this.props;
-
     await firestore.setListener(`events/${match.params.id}`);
   }
 
