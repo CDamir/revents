@@ -6,6 +6,7 @@ import {
 import { toastr } from 'react-redux-toastr';
 import { createNewEvent } from '../../app/common/util/helpers';
 import firebase from '../../app/config/firebase';
+import { FETCH_EVENTS } from './eventConstants'
 
 export const createEvent = event => {
   return async (dispatch, getState, { getFirestore, getFirebase }) => {
@@ -107,4 +108,29 @@ export const addEventComment = (eventId, values, parentId) =>
       console.log(error)
       toastr.error('Oops', 'Problem adding comment')
     }
+  }
+
+  export const getEventsForDashboard = () => 
+    async (dispatch, getState) => {
+      const today = new Date();
+      const firestore = firebase.firestore();
+      const eventsQuery = firestore.collection('events').where('date', '>=', today);
+      try {
+        dispatch(asyncActionStart());
+        const querySnapshot = await eventsQuery.get();
+        let events = [];
+        // loop throght docs
+        for(let i = 0; i < querySnapshot.docs.length; i++){
+          // extract document and add an id
+          let evt = { ...querySnapshot.docs[i].data(), id: querySnapshot.docs[i].id }
+          events.push(evt);
+        }
+        // console.log(events)
+        dispatch(asyncActionFinish());
+        dispatch({type: FETCH_EVENTS, payload: { events }});
+      } catch (error) {
+        dispatch(asyncActionError());
+        console.log(error)
+      }
+     
   }
