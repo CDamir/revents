@@ -94,7 +94,6 @@ export const updateEvent = event => {
     }
   };
 };
-
 export const addEventComment = (eventId, values, parentId) => async (
   dispatch,
   getState,
@@ -118,6 +117,7 @@ export const addEventComment = (eventId, values, parentId) => async (
     toastr.error("Oops", "Problem adding comment");
   }
 };
+
 // first with query
 // export const getEventsForDashboard = () =>
 //   async (dispatch, getState) => {
