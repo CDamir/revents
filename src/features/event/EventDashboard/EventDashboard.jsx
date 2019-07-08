@@ -26,6 +26,7 @@ const actions = {
 };
 
 class EventDashboard extends Component {
+  // need for sematntic ui sticky component
   contextRef = createRef();
 
   state = {
