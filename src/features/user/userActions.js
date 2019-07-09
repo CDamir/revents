@@ -118,6 +118,7 @@ export const setMainPhoto = photo => async (dispatch, getState) => {
         .collection('events')
         .doc(eventQuerySnap.docs[i].data().eventId);
       let event = await eventDocRef.get();
+      // event host
       if (event.data().hostUid === user.uid) {
         batch.update(eventDocRef, {
           hostPhotoURL: photo.url,
@@ -156,7 +157,7 @@ export const goingToEvent = event => async (dispatch, getState) => {
     let eventAttendeeDocRef = firestore
       .collection('event_attendee')
       .doc(`${event.id}_${user.uid}`);
-
+    // lock the document while updating with transaction
     await firestore.runTransaction(async transaction => {
       await transaction.get(eventDocRef);
       await transaction.update(eventDocRef, {

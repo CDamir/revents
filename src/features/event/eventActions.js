@@ -52,6 +52,7 @@ export const cancelToggle = (cancelled, eventId) => async (
     console.log(error);
   }
 };
+
 export const updateEvent = event => {
   return async (dispatch, getState) => {
     const firestore = firebase.firestore();
