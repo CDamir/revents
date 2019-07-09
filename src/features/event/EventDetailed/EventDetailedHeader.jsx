@@ -64,22 +64,12 @@ const EventDetailedHeader = ({
       <Segment attached='bottom' clearing>
         {!isHost && (
           <Fragment>
-            {isGoing &&
-              <Button onClick={() => cancelGoingToEvent(event)}>
-                Cancel My Place
-              </Button>}
-              {!isGoing && authenticated &&
-              <Button loading={loading} onClick={() => goingToEvent(event)} color='teal'>
-                JOIN THIS EVENT
-              </Button>}
-              {!authenticated &&
-              <Button loading={loading} onClick={() => openModal('UnauthModal')} color='teal'>
-                JOIN THIS EVENT
-              </Button>}
-
+            { isGoing && <Button onClick={() => cancelGoingToEvent(event)}>Cancel My Place</Button> }
+            { !isGoing && authenticated && <Button loading={loading} onClick={() => goingToEvent(event)} color='teal'> JOIN THIS EVENT </Button> }
+            { !authenticated && <Button loading={loading} onClick={() => openModal('UnauthModal')} color='teal'> JOIN THIS EVENT</Button> }
           </Fragment>
         )}
-
+      
         {isHost && (
           <Button
             as={Link}
