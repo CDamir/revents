@@ -10,8 +10,8 @@ const actions = {
   login,
   socialLogin
 };
-
-const LoginForm = ({ login, handleSubmit, error, socialLogin }) => {
+// redux form props
+const LoginForm = ({ login, handleSubmit, error, socialLogin, submitting }) => {
   return (
     <Form size='large' onSubmit={handleSubmit(login)} autoComplete='off'>
       <Segment>
@@ -28,7 +28,7 @@ const LoginForm = ({ login, handleSubmit, error, socialLogin }) => {
           placeholder='password'
         />
         {error && <Label basic color='red'>{error}</Label>}
-        <Button fluid size='large' color='teal'>
+        <Button fluid size='large' color='teal' loading={submitting}>
           Login
         </Button>
         <Divider horizontal>Or</Divider>

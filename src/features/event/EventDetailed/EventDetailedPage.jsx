@@ -11,6 +11,8 @@ import { objectToArray, createDataTree } from '../../../app/common/util/helpers'
 import { goingToEvent, cancelGoingToEvent } from '../../user/userActions';
 import { addEventComment } from '../eventActions';
 import {openModal} from '../../modals/modalActions'
+import LoadingComponent from '../../../app/layout/LoadingComponent';
+import NotFound from '../../../app/layout/NotFound';
  
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -21,13 +23,12 @@ const mapState = (state, ownProps) => {
     state.firestore.ordered.events &&
     state.firestore.ordered.events.length > 0
   ) {
-    event =
-      state.firestore.ordered.events.filter(event => event.id === eventId)[0] ||
-      {};
+    event = state.firestore.ordered.events.filter(event => event.id === eventId)[0] || {};
   }
 
   return {
     event,
+    requesting: state.firestore.status.requesting,
     loading: state.async.loading,
     auth: state.firebase.auth,
     eventChat:
@@ -63,14 +64,21 @@ class EventDetailedPage extends Component {
       addEventComment,
       eventChat,
       loading,
-      openModal
+      openModal,
+      requesting,
+      match
     } = this.props;
-    const attendees =
-      event && event.attendees && objectToArray(event.attendees);
+    // host is allways the first
+    const attendees = event && event.attendees && objectToArray(event.attendees).sort((a, b) => {
+      return a.joinDate.toDate() - b.joinDate.toDate();
+    });
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid);
     const chatTree = !isEmpty(eventChat) && createDataTree(eventChat);
     const authenticated = auth.isLoaded && !auth.isEmpty;
+    const loadingEvent = requesting[`events/${match.params.id}`];
+    if(loadingEvent) return <LoadingComponent />;
+    if(Object.keys(event).length === 0) return <NotFound />;
     return (
       <Grid>
         <Grid.Column width={10}>
